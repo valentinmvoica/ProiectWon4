@@ -1,10 +1,11 @@
 ﻿using Data.Models;
 using ProiectWon4.DTOs;
+using System.Runtime.CompilerServices;
 
 namespace ProiectWon4.Extensions
 {
     public static class EntityToDtoExtensions
-    {       
+    {
         public static StudentToGet ToDto(this Student student)
         {
             if (student == null)
@@ -34,5 +35,35 @@ namespace ProiectWon4.Extensions
                 Number = address.Number
             };
         }
+
+        public static SubjectToGet ToDto(this Subject subject)
+        {
+            if (subject == null)
+                return null;
+
+            return new SubjectToGet
+            {
+                Id = subject.Id,
+                Name = subject.Name,
+                TeacherId = subject.TeacherId
+            };
+        }
+
+        public static MarkToGEt ToDto(this Mark mark)
+        {
+            if (mark == null)
+            {
+                return null;
+            }
+            return new MarkToGEt
+            {
+                Id = mark.Id,
+                CreationDate = mark.CreationDate,
+                StudentId = mark.StudentId,
+                SubjectId = mark.SubjectId,
+                Value = mark.Value
+            };
     }
+
+
 }

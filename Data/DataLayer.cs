@@ -95,5 +95,22 @@ namespace Data
 
             ctx.SaveChanges();
         }
+
+        public Subject AddSubject(string subjectName)
+        {
+            var subject = new Subject { Name = subjectName};
+
+            ctx.Subjects.Add(subject);
+            ctx.SaveChanges();
+
+            return subject;
+        }
+
+        public void AddMarkToStudent(int studentId, int markValue)
+        {
+            var student = ctx.Students.First(s => s.Id == studentId);
+            student.Marks.Add(new Mark { Value = markValue, CreationDate = DateTime.UtcNow });
+        }
+
     }
 }
