@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Sockets;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Data.Models
+﻿namespace Data.Models
 {
     public class Student
     {
@@ -14,5 +7,6 @@ namespace Data.Models
         public string LastName { get; set; }
         public int Age { get; set; }
         public Address Address{ get; set; }
+        public List<Mark> Marks { get; set; } = new List<Mark>();
     }
 }
