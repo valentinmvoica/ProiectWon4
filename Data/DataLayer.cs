@@ -51,7 +51,7 @@ namespace Data
             }
             else
             {
-                if (student.Address != null)
+                if (student.Address != null && student.Address.TeacherId==null)
                 {
                     ctx.Remove(student.Address);
                 }
@@ -95,5 +95,28 @@ namespace Data
 
             ctx.SaveChanges();
         }
+
+        public Subject AddSubject(string subjectName, int teacherId)
+        {
+            var subject = new Subject { Name = subjectName, TeacherId  =teacherId};
+
+            ctx.Subjects.Add(subject);
+            ctx.SaveChanges();
+
+            return subject;
+        }
+
+        public void AddMarkToStudent(int studentId, int markValue)
+        {
+            var student = ctx.Students.FirstOrDefault(s => s.Id == studentId);
+
+            if (student == null)
+            {
+                throw new EntityNotFoundException($"Student {studentId} is null");
+            }
+
+            student.Marks.Add(new Mark { Value = markValue, CreationDate = DateTime.UtcNow });
+        }
+
     }
 }

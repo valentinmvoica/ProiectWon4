@@ -19,9 +19,6 @@ namespace ProiectWon4.Controllers
         /// </summary>
         [HttpPost]
         public void Seed() {
-
-            this.context.Database.EnsureCreated();
-
             var Student1 = new Student { FirstName = "Marin", LastName = "Chitac", Age = 23 };
             var Student2 = new Student { FirstName = "Chitac", LastName = "Marin", Age = 32 };
             var Student3 = new Student { FirstName = "Andrei", LastName = "Popa", Age = 23 };
@@ -40,6 +37,12 @@ namespace ProiectWon4.Controllers
             this.context.Add(Student3);
 
             context.SaveChanges();
+        }
+
+        [HttpPost("createDb")]
+        public void CreateDb()
+        {
+            this.context.Database.EnsureCreated();
         }
     }
 }

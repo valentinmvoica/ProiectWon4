@@ -1,5 +1,4 @@
 using Swashbuckle.AspNetCore.SwaggerGen;
-using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 using Data.Models;
 using Data;
@@ -13,10 +12,8 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(o => AddSwaggerDocumentation(o));
 
-
-
-builder.Services.AddTransient<CatalogueDbContext>();
-builder.Services.AddTransient<DataLayer>();
+builder.Services.AddScoped<CatalogueDbContext>();
+builder.Services.AddScoped<DataLayer>();
 
 var app = builder.Build();
 
