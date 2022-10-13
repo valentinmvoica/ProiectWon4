@@ -29,7 +29,7 @@ namespace ProiectWon4.Controllers
         /// </summary>
         /// <returns>Students list</returns>
         [HttpGet("all")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<StudentToGet>))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<StudentWithAddressToGet>))]
         public IActionResult GetAllStudents() =>
             Ok(context.Students.Include(s => s.Address).Select(s => s.ToDto()).ToList());
         //            Ok(dataLayer.GetAllStudents().Select(s => s.ToDto()).ToList());
@@ -40,7 +40,7 @@ namespace ProiectWon4.Controllers
         /// <param name="studentId">student id to get</param>
         /// <returns>studednt data</returns>
         [HttpGet("{studentId}")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(StudentToGet))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(StudentWithAddressToGet))]
         [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(string))]
         public IActionResult GetById([FromRoute] int studentId)
         {
@@ -59,7 +59,7 @@ namespace ProiectWon4.Controllers
         /// <param name="studentToCreate">Student data</param>
         /// <returns>Created student data</returns>
         [HttpPost]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(StudentToGet))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(StudentWithAddressToGet))]
         public IActionResult CreateStudent([FromBody] StudentToCreate studentToCreate)
         {
             return Ok(dataLayer.CreateStudent(studentToCreate.ToEntity()).ToDto());
@@ -162,8 +162,8 @@ namespace ProiectWon4.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(string))]
         public IActionResult GetAllMarks([FromRoute] int studentId, [FromQuery] int? subjectId)
         {
-
-            var student = context.Students.Include(s => s.Marks).FirstOrDefault(s => s.Id == studentId);
+            var studentEnumerable = context.Students.Include(s => s.Marks);
+            var student = studentEnumerable.FirstOrDefault(s => s.Id == studentId);
 
             if (student == null)
             {

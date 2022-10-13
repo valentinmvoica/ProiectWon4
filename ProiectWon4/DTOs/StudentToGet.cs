@@ -1,6 +1,6 @@
 ﻿namespace ProiectWon4.DTOs
 {
-    public class StudentToGet
+    public class StudentWithAddressToGet
     {
         public int Id { get; set; }
         public string FirstName { get; set; }

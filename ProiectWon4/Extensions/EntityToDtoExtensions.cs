@@ -6,13 +6,13 @@ namespace ProiectWon4.Extensions
 {
     public static class EntityToDtoExtensions
     {
-        public static StudentToGet ToDto(this Student student)
+        public static StudentWithAddressToGet ToDto(this Student student)
         {
             if (student == null)
             {
                 return null;
             }
-            StudentToGet dto = new StudentToGet();
+            StudentWithAddressToGet dto = new StudentWithAddressToGet();
             dto.Id = student.Id;
             dto.FirstName = student.FirstName;
             dto.LastName = student.LastName;
