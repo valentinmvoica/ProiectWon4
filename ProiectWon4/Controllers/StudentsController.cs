@@ -214,28 +214,26 @@ namespace ProiectWon4.Controllers
         public IActionResult GetAllStudentOrdered([Optional][FromQuery] bool orderDescending)
         {
             var allStudentsWithMarks = context.Students.Include(s => s.Marks).ToList();
-            List<StudentWithAverageToGet> result;
+
+            var allStudents = allStudentsWithMarks.Select(s => new StudentWithAverageToGet(
+                        s.Id,
+                        s.FirstName + s.LastName,
+                        s.Age,
+                        s.Marks.GroupBy(m => m.SubjectId)
+                        .Average(//calculul mediei mediilor notelor grupate pe materii
+                            marksGroup => marksGroup.Average(mark => mark.Value) // calculul mediei unei materii
+                            )
+                        )
+            );
 
             if (orderDescending)
             {
-                result = allStudentsWithMarks.OrderByDescending(s => s.Marks.Average(m => m.Value)).Select(s => new StudentWithAverageToGet(
-                        s.Id,
-                        s.FirstName + s.LastName,
-                        s.Age,
-                        s.Marks.Average(m => m.Value)
-                        )).ToList();
+                return Ok(allStudents.OrderByDescending(s => s.Average).ToList());               
             }
             else
             {
-                result = allStudentsWithMarks.OrderBy(s => s.Marks.Average(m => m.Value)).Select(s => new StudentWithAverageToGet(
-                        s.Id,
-                        s.FirstName + s.LastName,
-                        s.Age,
-                        s.Marks.Average(m => m.Value)
-                        )).ToList();
+                return Ok(allStudents.OrderByDescending(s => s.Average).ToList());
             }
-
-            return Ok(result);
         }
     }
 }
